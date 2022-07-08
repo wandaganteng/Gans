@@ -75,10 +75,6 @@ ${vid.url}
 handler.help = ['play'].map(v => v + ' <search>')
 handler.tags = ['downloader']
 handler.command = /^play?$/i
-handler.premium = false
-handler.group = true
-
-handler.exp = 0
 handler.limit = true
 
 module.exports = handler
