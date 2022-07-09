@@ -518,7 +518,7 @@ module.exports = {
                 if (typeof chat !== 'object') global.db.data.chats[m.chat] = {}
                 if (chat) {
                     if (!('isBanned' in chat)) chat.isBanned = false
-                    if (!('welcome' in chat)) chat.welcome = false
+                    if (!('welcome' in chat)) chat.welcome = true
                     if (!('detect' in chat)) chat.detect = false
                     if (!('sWelcome' in chat)) chat.sWelcome = ''
                     if (!('sBye' in chat)) chat.sBye = ''
@@ -729,7 +729,7 @@ module.exports = {
                     else m.exp += xp
                     if (!isPrems && plugin.limit && global.db.data.users[m.sender].limit < plugin.limit * 1) {
                      //   this.reply(m.chat, `Limit anda habis, silahkan beli melalui *${usedPrefix}buy*`, m)
-                        this.sendButton(m.chat, `Limit anda habis, silahkan beli melalui *${usedPrefix}buyall* atau *${usedPrefix}hadiah*`, author, null, [['Buy Limit', '/buyall'], ['Hadiah', '/hadiah']], m)
+                        this.reply(m.chat, `Limit anda habis, silahkan beli melalui *${usedPrefix}buyall* atau *${usedPrefix}hadiah*`, author, null, [['Buy Limit', '/buyall'], ['Hadiah', '/hadiah']], m)
                         continue // Limit habis
                     }
                     if (plugin.level > _user.level) {
@@ -843,7 +843,7 @@ module.exports = {
         let chat = global.db.data.chats[id] || {}
         let text = ''
         switch (action) {
-            case 'add':
+             case 'add':
             case 'remove':
                 if (chat.welcome) {
                     let groupMetadata = await this.groupMetadata(id) || (conn.chats[id] || {}).metadata
@@ -874,7 +874,7 @@ module.exports = {
   async delete(m) {
     let chat = global.db.data.chats[m.key.remoteJid]
     if (chat.delete) return
-    await this.sendButton(m.key.remoteJid, `
+    await this.reply(m.key.remoteJid, `
 Terdeteksi @${m.participant.split`@`[0]} telah menghapus pesan
 ketik *.on delete* untuk mematikan pesan ini
 `.trim(), watermark, 'Matikan Antidelete', ',on delete', m.message)
@@ -909,7 +909,7 @@ ketik *.on delete* untuk mematikan pesan ini
     @${descOwner.split`@`[0]} telah mengubah deskripsi grup.
     ${desc}
         `.trim()
-    this.sendButton(jid, caption, watermark, 'Matikan', ',off desc')
+    this.reply(jid, caption, watermark, 'Matikan', ',off desc')
 
   }
 },
@@ -944,8 +944,8 @@ conn.ws.on('CB:call', async (json) => {
 
 global.dfail = (type, m, conn) => {
     let msg = {
-        rowner: 'Perintah ini hanya dapat digunakan oleh _*GEMPY*_',
-        owner: 'Perintah ini hanya dapat digunakan oleh _*GEMPY*_!',
+        rowner: 'Perintah ini hanya dapat digunakan oleh _*OWNER*_',
+        owner: 'Perintah ini hanya dapat digunakan oleh _*Owner*_!',
         mods: 'Perintah ini hanya dapat digunakan oleh _*Moderator*_ !',
         premium: '*Perintah Ini Hanya Dapat Digunakan Oleh Member Premium* \n\nUndang Bot+Premium\n1 Bulan Rp10.000\n2bulan Rp15.000\n\nKetik .sewa kalau minat..', 
         banned: 'Perintah ini hanya untuk pengguna yang terbanned..',
